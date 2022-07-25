@@ -78,9 +78,9 @@ public class Monitor {
         offersRepository.save(newOffers);
     }
 
-    List<Offer> fetchOffers(Page page,
-                            OffersSite offersSite,
-                            Configuration configuration) throws Exception {
+    private List<Offer> fetchOffers(Page page,
+                                    OffersSite offersSite,
+                                    Configuration configuration) throws Exception {
         final Document fetchedPage = pageFetcher.fetchPage(page);
 
         return OffersExtractor.extractFromFetchedPage(configuration.getName(), offersSite, fetchedPage);
