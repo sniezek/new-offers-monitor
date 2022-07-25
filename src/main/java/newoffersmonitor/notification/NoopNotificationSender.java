@@ -3,7 +3,7 @@ package newoffersmonitor.notification;
 import newoffersmonitor.configurations.Configuration;
 import newoffersmonitor.db.Offer;
 
-public class NoopEmailSender implements NotificationSender {
+public class NoopNotificationSender implements NotificationSender {
 
     @Override
     public void sendOfferNotification(Offer offer, Configuration configuration, boolean isSuper) throws Exception {
