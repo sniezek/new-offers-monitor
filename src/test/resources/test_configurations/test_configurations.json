@@ -1,0 +1,59 @@
+{
+  "configurations": [
+    {
+      "name": "OlafFlatsTo375k",
+      "active": true,
+      "emails": [
+        "someemail@email.com",
+        "someotheremail@email.com"
+      ],
+      "ignoredKeywords": [
+        "zlocie",
+        "złocie"
+      ],
+      "superKeywords": [
+        "krowodrz",
+        "bronowic"
+      ],
+      "pages": [
+        {
+          "url": "https://www.olx.pl/nieruchomosci/mieszkania/sprzedaz/krakow/?search%5Bfilter_float_price%3Ato%5D=375000",
+          "active": true
+        },
+        {
+          "url": "https://www.otodom.pl/pl/oferty/sprzedaz/mieszkanie/krakow?priceMax=375000&by=LATEST&direction=DESC",
+          "active": true
+        },
+        {
+          "url": "https://www.morizon.pl/mieszkania/najnowsze/krakow/?ps%5Bprice_to%5D=375000",
+          "active": false
+        }
+      ]
+    },
+    {
+      "name": "OlafW204Coupe",
+      "active": true,
+      "emails": [
+        "someemail@email.com"
+      ],
+      "pages": [
+        {
+          "url": "https://www.otomoto.pl/osobowe/mercedes-benz/c-klasa/seg-coupe/od-2011?search%5Bfilter_enum_generation%5D=gen-w204-2007-2014&search%5Bfilter_enum_fuel_type%5D=petrol&search%5Bfilter_enum_gearbox%5D=automatic&search%5Bfilter_enum_damaged%5D=0&search%5Border%5D=created_at_first%3Adesc&search%5Badvanced_search_expanded%5D=true",
+          "active": true
+        }
+      ]
+    },
+    {
+      "name": "SomeInactiveConfiguration",
+      "active": false,
+      "emails": [
+      ],
+      "pages": [
+        {
+          "url": "https://www.otomoto.pl/osobowe/mercedes-benz/c-klasa/seg-coupe/od-2011?search%5Bfilter_enum_generation%5D=gen-w204-2007-2014&search%5Bfilter_enum_fuel_type%5D=petrol&search%5Bfilter_enum_gearbox%5D=automatic&search%5Bfilter_enum_damaged%5D=0&search%5Border%5D=created_at_first%3Adesc&search%5Badvanced_search_expanded%5D=true",
+          "active": true
+        }
+      ]
+    }
+  ]
+}
