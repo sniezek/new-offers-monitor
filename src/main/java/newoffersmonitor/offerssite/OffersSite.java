@@ -44,7 +44,7 @@ public enum OffersSite implements OffersSiteInterface {
     OTODOM {
         @Override
         public Elements getOfferElements(Document fetchedPage) {
-            return fetchedPage.getElementsByClass("es62z2j17");
+            return fetchedPage.getElementsByClass("es62z2j19");
         }
 
         @Override
@@ -62,7 +62,7 @@ public enum OffersSite implements OffersSiteInterface {
                     .first()
                     .getElementsByTag("article")
                     .first()
-                    .getElementsByClass("eclomwz0")
+                    .getElementsByClass("eclomwz1")
                     .first()
                     .text();
         }
