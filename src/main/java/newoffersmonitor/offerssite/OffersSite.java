@@ -76,11 +76,15 @@ public enum OffersSite implements OffersSiteInterface {
 
         @Override
         public String getOfferUrl(Element offer) {
-            final String url = "https://adresowo.pl" + offer
+            final Element element = offer
                     .getElementsByTag("a")
-                    .first()
-                    .attr("href");
+                    .first();
 
+            if (element == null) {
+                return NOPE;
+            }
+
+            final String url = element.attr("href");
             final Element address = offer
                     .getElementsByClass("result-info__header")
                     .first();
