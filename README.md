@@ -16,6 +16,7 @@ The program supports 10 popular Polish websites with real estate sale & rental o
 * `Szybko.pl`
 * `Sprzedajemy.pl`
 * `Gratka.pl`
+* `Domy.pl`
 
 and a popular Polish marketplace with car sale offers: `Otomoto.pl`.
 
