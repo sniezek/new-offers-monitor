@@ -103,7 +103,7 @@ public enum OffersSite implements OffersSiteInterface {
                     .first()
                     .text();
 
-            return place + " " + street + " " + url;
+            return place + " " + street + " https://adresowo.pl" + url;
         }
 
         @Override
