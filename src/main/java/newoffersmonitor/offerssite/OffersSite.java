@@ -4,6 +4,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.List;
 import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
@@ -62,7 +63,7 @@ public enum OffersSite implements OffersSiteInterface {
                     .first()
                     .getElementsByTag("article")
                     .first()
-                    .getElementsByClass("eclomwz1")
+                    .getElementsByClass("eclomwz2")
                     .first()
                     .text();
         }
@@ -325,7 +326,13 @@ public enum OffersSite implements OffersSiteInterface {
     GRATKA {
         @Override
         public Elements getOfferElements(Document fetchedPage) {
-            return fetchedPage.getElementsByClass("listing__teaserWrapper");
+            final List<Element> elements = fetchedPage
+                    .getElementsByClass("listing__teaserWrapper")
+                    .stream()
+                    .filter(element -> !"Zapytaj o cenę".equals(this.getOfferPrice(element)))
+                    .collect(toList());
+
+            return new Elements(elements);
         }
 
         @Override
