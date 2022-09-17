@@ -47,7 +47,7 @@ public class GmailEmailSender implements NotificationSender {
     }
 
     @Override
-    public void sendWarningNotificationToAdmin(String warningMessage) {
+    public synchronized void sendWarningNotificationToAdmin(String warningMessage) {
         if (alreadySentWarningEmails.contains(warningMessage)) {
             return;
         }

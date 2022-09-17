@@ -16,7 +16,10 @@ import org.jsoup.nodes.Document;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
 
+import static java.util.concurrent.Executors.newFixedThreadPool;
+import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.stream.Collectors.toList;
 import static newoffersmonitor.notification.NotificationSender.IGNORED_ERRORS;
 
@@ -45,22 +48,40 @@ public class Monitor {
             return;
         }
 
-        for (final Configuration configuration : configurations.getActiveConfigurations()) {
-            log.info("Processing {} configuration", configuration.getName());
+        final ExecutorService executorService = newFixedThreadPool(3);
 
+        for (final Configuration configuration : configurations.getActiveConfigurations()) {
             for (final Page page : configuration.getActivePages()) {
-                try {
-                    processPage(configuration, page);
-                } catch (Exception e) {
-                    log.error(e.getMessage(), e);
-                    Optional.ofNullable(e.getMessage())
-                            .filter(message -> IGNORED_ERRORS.stream().noneMatch(message::startsWith))
-                            .ifPresent(notificationSender::sendWarningNotificationToAdmin);
-                }
+                executorService.submit(() -> {
+                    try {
+                        processPage(configuration, page);
+                    } catch (Exception e) {
+                        log.error(e.getMessage(), e);
+                        Optional.ofNullable(e.getMessage())
+                                .filter(message -> IGNORED_ERRORS.stream().noneMatch(message::startsWith))
+                                .ifPresent(notificationSender::sendWarningNotificationToAdmin);
+                    }
+                });
             }
         }
 
-        log.info("Finished processing all configurations");
+        executorService.shutdown();
+        final boolean successfullyTerminated;
+
+        try {
+            successfullyTerminated = executorService.awaitTermination(4, MINUTES);
+        } catch (InterruptedException e) {
+            log.error(e.getMessage(), e);
+            notificationSender.sendWarningNotificationToAdmin("Thread interrupted");
+            return;
+        }
+
+        if (successfullyTerminated) {
+            log.info("Finished processing all configurations");
+        } else {
+            log.error("Timeout elapsed before termination");
+            notificationSender.sendWarningNotificationToAdmin("Timeout elapsed before termination");
+        }
     }
 
     private void processPage(Configuration configuration, Page page) throws Exception {
