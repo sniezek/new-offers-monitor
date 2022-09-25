@@ -1,5 +1,8 @@
 package newoffersmonitor.offerssite;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import newoffersmonitor.offerssite.javascript.OtodomData;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -7,6 +10,7 @@ import org.jsoup.select.Elements;
 import java.util.List;
 import java.util.Optional;
 
+import static java.lang.Integer.parseInt;
 import static java.util.stream.Collectors.toList;
 
 public enum OffersSite implements OffersSiteInterface {
@@ -45,12 +49,22 @@ public enum OffersSite implements OffersSiteInterface {
     OTODOM {
         @Override
         public Elements getOfferElements(Document fetchedPage) {
-            return fetchedPage.getElementsByClass("es62z2j19");
+            final Element dataContainer = fetchedPage.getElementById("__NEXT_DATA__");
+            final String data = dataContainer.childNodes().get(0).toString();
+            final OtodomData otodomData;
+
+            try {
+                otodomData = new ObjectMapper().readValue(data, OtodomData.class);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+
+            return otodomData.toElements();
         }
 
         @Override
         public String getOfferUrl(Element offer) {
-            return "https://www.otodom.pl" + offer
+            return "https://www.otodom.pl/pl/oferta/" + offer
                     .getElementsByTag("a")
                     .first()
                     .attr("href");
@@ -58,14 +72,10 @@ public enum OffersSite implements OffersSiteInterface {
 
         @Override
         public String getOfferPrice(Element offer) {
-            return offer
-                    .getElementsByTag("a")
-                    .first()
-                    .getElementsByTag("article")
-                    .first()
-                    .getElementsByClass("eclomwz2")
-                    .first()
-                    .text();
+            return String
+                    .format("%,d", parseInt(offer.getElementsByTag("a").attr("price")))
+                    .replace(",", " ")
+                    + " zł";
         }
     },
 
