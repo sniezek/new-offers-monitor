@@ -10,6 +10,7 @@ import org.jsoup.select.Elements;
 import java.util.List;
 import java.util.Optional;
 
+import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 import static java.util.stream.Collectors.toList;
 
@@ -73,7 +74,7 @@ public enum OffersSite implements OffersSiteInterface {
         @Override
         public String getOfferPrice(Element offer) {
             return String
-                    .format("%,d", parseInt(offer.getElementsByTag("a").attr("price")))
+                    .format("%,d", (int) parseDouble(offer.getElementsByTag("a").attr("price")))
                     .replace(",", " ")
                     + " zł";
         }
