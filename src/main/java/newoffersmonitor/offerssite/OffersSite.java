@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.lang.Double.parseDouble;
-import static java.lang.Integer.parseInt;
 import static java.util.stream.Collectors.toList;
 
 public enum OffersSite implements OffersSiteInterface {
