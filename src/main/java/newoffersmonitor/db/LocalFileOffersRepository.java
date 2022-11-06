@@ -31,7 +31,7 @@ public class LocalFileOffersRepository implements OffersRepository {
         final File offersFile = offersFile();
         final Map<String, Map<String, String>> offersToBeSaved = loadOffers(offersFile);
 
-        for (final Offer offer : offers) {
+        for (Offer offer : offers) {
             offersToBeSaved.computeIfAbsent(offer.getConfigurationName(), configurationName -> new HashMap<>());
             offersToBeSaved.get(offer.getConfigurationName()).put(offer.getUrlAndPrice(), offer.getAddedAt());
         }
